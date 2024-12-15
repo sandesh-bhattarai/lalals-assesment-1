@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Overview
+This is a simple multi-step application developed using Next.js 15. The app consists of three main screens:
 
-## Getting Started
+1. Login Screen: Where the user can log in using an email address and social login buttons.
+2. OTP Screen: The user enters an OTP to proceed further.
+3. Username Screen: The user sets their username with specific constraints.
 
-First, run the development server:
+## Features:
+### * Login Screen:
+* Social buttons that simply log to the console when clicked.
+* Email validation with error messages if the email pattern is incorrect.
+* Redirects to the OTP screen on valid email input.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### * OTP Screen:
+* Validates the OTP input. If the OTP is 1111, the user is redirected to the username screen.
+* Shows an error message if the OTP is invalid.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### * Username Screen:
+* Allows the user to input a username with constraints:
+* Only alphanumeric characters are allowed.
+* Maximum length of 20 characters.
+* No symbols.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Tech Stack
+* Next.js 15: Framework for React-based SSR and static site generation.
+* zustand: For state management.
+* Yup: For form validation schema.
+* react-hook-form: For managing form states and input validation.
+* @hookform/resolvers: For resolving Yup validation in React Hook Form.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Setup Process
+* Clone the repository
+* Install Dependencies
+* Copy `.env.sample` to `.env`
+* Run the Application 
+* Open your browser and go for: `http://localhost:3000`

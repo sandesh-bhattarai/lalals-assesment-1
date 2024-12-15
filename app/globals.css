@@ -4,12 +4,12 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #0f1011;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #13191F;
     --foreground: #ededed;
   }
 }
@@ -18,4 +18,44 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.bg-multi-gradient {
+  background: linear-gradient(-10deg, #c800ff -9.93%, #ff2c9b 25.49%, #ff7b00 71.36%, #ff8504 92.84%, #ffd363 106.19%);
+  border-radius: 10px;
+  
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 26px;
+}
+
+.logo {
+  position: relative;
+  display: inline-block;
+  width: 36px; /* Match the image width */
+  height: 35px; /* Match the image height */
+  border-radius: 50%; /* Optional: Make it circular if you prefer */
+}
+
+.logo::before {
+  content: '';
+  position: absolute;
+  top: -5px; /* Adjust distance for border thickness */
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  background: 
+    linear-gradient(312.58deg, #C800FF 17.25%, #FF2C9B 37.17%, #FF7B00 62.95%, #FF8504 75.03%, #FFD363 82.54%), 
+    conic-gradient(from 180deg at 50% 52.85%, #441AFF 0deg, #4750FF 28.23deg, #FF3E5E 77.63deg, #FF9004 165.6deg, #FF2E54 229.64deg, #DD1AFF 283.07deg, #DD1AFF 333.66deg, #441AFF 360deg);
+  background-size: 100%, 100%;
+  background-position: center;
+  border-radius: 50%; /* Optional: Ensure the border is circular if you set the image in a circle */
+  z-index: -1;
+}
+
+.logo img {
+  position: relative;
+  z-index: 1; /* Ensure the image stays on top */
+  border-radius: 50%; /* Optional: To match the rounded shape */
+  box-shadow: none;
 }

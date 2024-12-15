@@ -1,101 +1,123 @@
+'use client';
+import SsoIconComponents from "@/components/sso-icons/SsoIconComponents";
+import { yupResolver } from "@hookform/resolvers/yup";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { Controller, useForm, SubmitHandler } from 'react-hook-form';
+import * as Yup from "yup";
+import useUserStore from "@/stores/user.stores";
+
+// Define the type for the form data
+type UserInputFormData = {
+  email: string;
+};
+
+// Validation Schema using Yup
+const userInputDTO = Yup.object({
+  email: Yup.string().email('Please enter a valid email address').required('Email is compulsory'),
+});
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const router = useRouter();
+  const setEmail = useUserStore((state) => state.setEmail);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  // Use `useForm` with the `UserInputFormData` type and `yupResolver`
+  const { control, handleSubmit } = useForm<UserInputFormData>({
+    resolver: yupResolver(userInputDTO)
+  });
+
+  // Handle form submission with strongly typed data
+  const onSubmitEventHandler: SubmitHandler<UserInputFormData> = (data) => {
+    setEmail(data.email);
+    router.push("/otp");
+  };
+
+  const ssoClickHandler = () => {
+    console.log("SSO Clicked");
+  };
+
+  return (
+    <section className="flex flex-col bg-black min-h-screen p-10 gap-6 items-center justify-center">
+      <div className="w-[450px] h-[539px] bg-primary-950 rounded-[20px] shadow-[0px_0px_30px_0px_#0000004D] p-10 flex flex-col items-center">
+        
+        {/* Logo Section */}
+        <div className="flex flex-col items-center mb-5">
+          <Image width={36} height={35} src='/logo.svg' alt="MusicGPT Logo" />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+
+        {/* Heading Section */}
+        <div className="space-y-6 text-center">
+          <h1 className="tracking-[0.02em] leading-[31px] font-inter font-medium text-2xl text-white">
+            Welcome to MusicGPT
+          </h1>
+          <h2 className="text-[16px] leading-[21px] font-medium font-inter text-shades-800">
+            Sign up or log in to your existing account.
+          </h2>
+        </div>
+
+        {/* Social Icons */}
+        <div className="w-[370px] gap-[20px] py-10 flex flex-col justify-center">
+          <div className="w-full h-[50px] flex justify-center gap-[10px]">
+            {['apple', 'google', 'discord', 'facebook'].map((platform) => (
+              <SsoIconComponents
+                key={platform}
+                href="#"
+                className="flex justify-center items-center w-1/4 py-[15px] px-0 rounded-[10px] border border-[#363E46]"
+                onClickHandler={ssoClickHandler}
+              >
+                <Image
+                  width={20}
+                  height={20}
+                  src={`/icons/${platform}-icon.png`}
+                  alt={`${platform} logo`}
+                />
+              </SsoIconComponents>
+            ))}
+          </div>
+        </div>
+
+        {/* Or Separator */}
+        <div className="flex items-center justify-center gap-2 pb-5 w-[370px] h-[21px]">
+          <span className="flex-1 border-t border-[#363E46]"></span>
+          <span className="text-[16px] leading-[21px] font-normal text-[#363E46]">Or</span>
+          <span className="flex-1 border-t border-[#363E46]"></span>
+        </div>
+
+        {/* Form Section */}
+        <div className="grid gap-5 w-[370px]">
+          <form onSubmit={handleSubmit(onSubmitEventHandler)}>
+            <Controller
+              control={control}
+              name="email"
+              defaultValue=""
+              render={({ field, formState: { errors } }) => (
+                <>
+                  <input
+                    {...field}
+                    type="text"
+                    className="w-full h-[50px] bg-primary-950 border border-[#363E46] rounded-[10px] box-border px-4 focus:outline-none focus:border-shades-800 focus:ring-1 focus:ring-shades-800 font-inter text-base font-normal text-left mb-[10px]"
+                    placeholder="Email"
+                  />
+                  {errors?.email && <p className="text-red-500 text-sm mt-2">{errors.email.message}</p>}
+                </>
+              )}
+            />
+
+            <button
+              type="submit"
+              className="text-[16px] font-medium font-inter leading-[26px] mt-[10px] w-full h-[50px] bg-[#232A33] rounded-[10px] flex items-center justify-center px-[12px] py-[3px] gap-[10px] focus:outline-none focus:ring-2 focus:ring-shades-800"
+            >
+              Continue
+            </button>
+          </form>
+        </div>
+
+        {/* Terms and Privacy */}
+        <p className="flex my-10 font-inter gap-5 text-center font-medium leading-[21px] text-sm text-shades-800">
+          By continuing, you agree to our Terms & Privacy
+        </p>
+
+      </div>
+    </section>
   );
 }
